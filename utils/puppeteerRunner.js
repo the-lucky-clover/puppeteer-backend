@@ -22,8 +22,14 @@ async function runPuppeteer(targetUrl, textPrompt) {
       await page.keyboard.press('Enter');
     }
 
-    await page.screenshot({ path: 'after_prompt.png' });
+const screenshotBuffer = await page.screenshot();
+const screenshotBase64 = screenshotBuffer.toString('base64');
 
+return {
+  success: true,
+  message: 'Prompt submitted and screenshot captured.',
+  screenshot: `data:image/png;base64,${screenshotBase64}`
+};
     return { success: true, message: 'Prompt submitted and screenshot captured.' };
 
   } catch (err) {
